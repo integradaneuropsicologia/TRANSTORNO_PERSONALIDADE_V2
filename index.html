@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionário para Identificação de Transtornos de Personalidade</title>
+
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --bg-soft:#eef2f7;
+    --card:#ffffff;
+    --line:#e5e7eb;
+    --line-2:#d1d5db;
+    --text:#111827;
+    --muted:#6b7280;
+    --pri:#16a34a;
+    --pri-dark:#15803d;
+    --err:#dc2626;
+    --warn:#d97706;
+    --ok:#059669;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    color: var(--text);
+    min-height: 100dvh;
+    display:flex;
+    align-items:flex-start; /* melhor para formulários longos */
+    justify-content:center;
+    padding:16px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:860px;
+  }
+
+  .card{
+    background: var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+
+  h1{
+    margin:0 0 8px;
+    font-size: clamp(20px, 3vw, 26px);
+    line-height:1.2;
+    color: var(--text);
+  }
+
+  .muted{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:16px;
+    line-height:1.4;
+  }
+
+  .status{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:16px;
+    background:#fff;
+    font-size:14px;
+    line-height:1.4;
+    word-break: break-word;
+  }
+
+  .status.loading{
+    border-color:#cbd5e1;
+    background:#f8fafc;
+    color:#334155;
+  }
+  .status.ok{
+    border-color:rgba(5,150,105,.25);
+    background:#ecfdf5;
+    color:#065f46;
+  }
+  .status.err{
+    border-color:rgba(220,38,38,.22);
+    background:#fef2f2;
+    color:#991b1b;
+  }
+  .status.warn{
+    border-color:rgba(217,119,6,.25);
+    background:#fffbeb;
+    color:#92400e;
+  }
+
+  .hidden{ display:none !important; }
+
+  #metaInfo{
+    margin-bottom:12px;
+  }
+
+  .pill{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#f9fafb;
+    color:#374151;
+    font-size:12px;
+    margin-right:6px;
+    margin-bottom:6px;
+    word-break: break-word;
+  }
+
+  form{
+    display:grid;
+    gap:14px;
+    margin-top:8px;
+  }
+
+  /* === ERRO / OBRIGATÓRIAS SEM RESPOSTA === */
+.row.invalid{
+  border-color: rgba(220,38,38,.65) !important;
+  background:#fef2f2;
+}
+
+.row.invalid .field-label{
+  color: var(--err);
+}
+
+.row.invalid .choice-item{
+  border-color: rgba(220,38,38,.35);
+  background:#fff5f5;
+}
+
+.row.invalid .field-control,
+.row.invalid input:not([type="radio"]):not([type="checkbox"]),
+.row.invalid textarea,
+.row.invalid select{
+  border-color: rgba(220,38,38,.65);
+  box-shadow: 0 0 0 3px rgba(220,38,38,.10);
+}
+
+/* ajuda o scroll a “encaixar” melhor */
+.row{ scroll-margin-top: 16px; }
+
+  .row{
+    display:grid;
+    gap:8px;
+    padding:12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#fff;
+  }
+
+  .field-label{
+    font-size:14px;
+    color:var(--text);
+    line-height:1.45;
+    font-weight:600;
+  }
+
+  /* Importante: NÃO estilizar todo input (senão quebra radio/checkbox) */
+  .field-control,
+  input:not([type="radio"]):not([type="checkbox"]),
+  textarea,
+  select{
+    width:100%;
+    background:#fff;
+    border:1px solid var(--line-2);
+    color:var(--text);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:16px; /* evita zoom no iPhone */
+    outline:none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+
+  .field-control:focus,
+  input:not([type="radio"]):not([type="checkbox"]):focus,
+  textarea:focus,
+  select:focus{
+    border-color:#93c5fd;
+    box-shadow:0 0 0 3px rgba(59,130,246,.14);
+  }
+
+  textarea{
+    min-height:100px;
+    resize:vertical;
+  }
+
+.choice-group{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap:8px;
+  margin-top:4px;
+}
+
+  .choice-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 12px;
+  background:#f9fafb;
+  cursor:pointer;
+  line-height:1.35;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+  .choice-item:hover{
+    background:#f3f4f6;
+    border-color:#cbd5e1;
+  }
+
+  .choice-item input[type="radio"],
+  .choice-item input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    margin:1px 0 0 0;
+    flex:0 0 18px;
+    accent-color: var(--pri);
+  }
+
+  .choice-text{
+    font-size:14px;
+    color:#111827;
+    line-height:1.35;
+  }
+
+  button{
+    margin-top:6px;
+    border:none;
+    border-radius:10px;
+    padding:12px 14px;
+    font-weight:700;
+    font-size:16px;
+    cursor:pointer;
+    background:var(--pri);
+    color:#ffffff;
+    transition:.2s ease;
+    width:100%;
+  }
+
+  button:hover{ background:var(--pri-dark); }
+  button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+  }
+
+  .small{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.4;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px){
+    body{
+      padding:10px;
+    }
+
+    .card{
+      border-radius:12px;
+      padding:14px;
+    }
+
+    .row{
+      padding:10px;
+      border-radius:10px;
+    }
+
+    .field-label{
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .choice-item{
+      padding:10px;
+      gap:8px;
+    }
+
+    .choice-text{
+      font-size:13px;
+    }
+
+    .muted, .status{
+      font-size:13px;
+    }
+  }
+</style>
+
+  <!-- Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Questionário para Identificação de Transtornos de Personalidade</h1>
+  
+
+      <div id="statusBox" class="status loading">Validando acesso...</div>
+
+      <div id="metaInfo" class="hidden"></div>
+
+      <div id="formWrap" class="hidden">
+        <!-- FORMULÁRIO (exemplo) -->
+       <form id="testForm"></form>
+
+       
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    const SUPABASE_URL = "https://ydypdeafbcdcamwigjuq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_lg9teAniku65cd2dnZJvIQ_Zii0XneZ";
+
+    const TEST_CODE_FIXO = "TRANSTORNO_PERSONALIDADE_V2";
+
+   const AREA_PACIENTE_URL = "https://integradaneuropsicologia.github.io/area-do-paciente-v2/";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const FREQ5   = ["Nunca/Raramente","Pouca frequência","Regular","Muito frequente", "Sempre/Quase sempre", "Não se aplica"];
+    const SEVER4  = ["Não","Leve","Moderada","Grave", "Não se aplica"];
+    const YESNO   = ["Sim","Não", "Não se aplica"];
+    const YNP     = ["Sim","Não","Não sei", "Não se aplica"];
+
+/**************************************************************
+ * PONTUAÇÃO DAS ESCALAS
+ * (null = não entra na soma)
+ **************************************************************/
+const SCALE_SCORE_MAPS = {
+  FREQ5: {
+    "Nunca/Raramente": 0,
+    "Pouca frequência":1,
+    "Regular": 2,
+    "Muito frequente": 3,
+     "Sempre/Quase sempre": 4,
+     "Não se aplica": null
+   
+  },
+
+  SEVER4: {
+    "Não": 0,
+    "Leve": 1,
+    "Moderada": 2,
+    "Grave": 3,
+    "Não se aplica": null
+  },
+  YESNO: {
+    "Não": 0,
+    "Sim": 1,
+    "Não se aplica": null
+  },
+  YNP: {
+    "Não": null,
+    "Sim": null,
+    "Não sei": null,
+    "Não se aplica": null
+  }
+};
+
+    /**************************************************************
+ * CONFIGURAÇÃO DAS PERGUNTAS (DINÂMICO)
+ **************************************************************/
+const FORM_QUESTIONS = [
+ {
+  name:"1",
+  section:"Cluster A — Paranoide",
+  type:"radio",
+  text:"Desconfiança persistente de que outras pessoas querem explorar, prejudicar ou enganar você?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"2",
+  section:"Cluster A — Paranoide",
+  type:"radio",
+  text:"Dificuldade em confiar nas pessoas por medo de que usem suas informações contra você?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"3",
+  section:"Cluster A — Paranoide",
+  type:"radio",
+  text:"Tendência a interpretar comentários neutros como críticas ou ataques?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"4",
+  section:"Cluster A — Esquizoide",
+  type:"radio",
+  text:"Pouco interesse em relações íntimas ou proximidade emocional com outras pessoas?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"5",
+  section:"Cluster A — Esquizoide",
+  type:"radio",
+  text:"Preferência clara por atividades solitárias na maior parte do tempo?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"6",
+  section:"Cluster A — Esquizotípico",
+  type:"radio",
+  text:"Crenças incomuns ou pensamento mágico (sinais, telepatia, pressentimentos)?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"7",
+  section:"Cluster A — Esquizotípico",
+  type:"radio",
+  text:"Sensação de experiências perceptivas estranhas ou presença incomum ao redor?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"8",
+  section:"Cluster B — Antissocial",
+  type:"radio",
+  text:"Tendência a manipular ou enganar pessoas para obter vantagens?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"9",
+  section:"Cluster B — Antissocial",
+  type:"radio",
+  text:"Pouco remorso ou culpa após prejudicar alguém?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"10",
+  section:"Cluster B — Borderline",
+  type:"radio",
+  text:"Relacionamentos intensos e instáveis com alternância entre idealização e desvalorização?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"11",
+  section:"Cluster B — Borderline",
+  type:"radio",
+  text:"Medo intenso de abandono ou rejeição?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"12",
+  section:"Cluster B — Borderline",
+  type:"radio",
+  text:"Oscilações emocionais intensas ao longo do dia?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"13",
+  section:"Cluster B — Histriônico",
+  type:"radio",
+  text:"Desconforto quando não é o centro das atenções em situações sociais?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"14",
+  section:"Cluster B — Histriônico",
+  type:"radio",
+  text:"Tendência a dramatizar emoções ou buscar aprovação constante?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"15",
+  section:"Cluster B — Narcisista",
+  type:"radio",
+  text:"Necessidade frequente de admiração ou reconhecimento especial?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"16",
+  section:"Cluster B — Narcisista",
+  type:"radio",
+  text:"Dificuldade em reconhecer ou considerar sentimentos e necessidades de outras pessoas?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"17",
+  section:"Cluster C — Evitativo",
+  type:"radio",
+  text:"Evita situações sociais por medo intenso de crítica, vergonha ou rejeição?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"18",
+  section:"Cluster C — Evitativo",
+  type:"radio",
+  text:"Sente-se socialmente inadequado ou inferior aos outros?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"19",
+  section:"Cluster C — Dependente",
+  type:"radio",
+  text:"Grande dificuldade em tomar decisões sem orientação ou confirmação de outras pessoas?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"20",
+  section:"Cluster C — Dependente",
+  type:"radio",
+  text:"Medo intenso de ficar sozinho ou sem apoio emocional?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"21",
+  section:"Cluster C — Obsessivo-Compulsivo",
+  type:"radio",
+  text:"Preocupação excessiva com ordem, regras, perfeccionismo ou controle?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"22",
+  section:"Cluster C — Obsessivo-Compulsivo",
+  type:"radio",
+  text:"Dificuldade em delegar tarefas porque acredita que os outros não farão corretamente?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+
+{
+  name:"23",
+  section:"Funcionamento da Personalidade",
+  type:"radio",
+  text:"Conflitos interpessoais frequentes ou relações instáveis ao longo da vida?",
+  options:FREQ5,
+  scale:"FREQ5"
+},
+{
+  name:"24",
+  section:"Funcionamento da Personalidade",
+  type:"radio",
+  text:"Dificuldade persistente em controlar impulsos ou emoções?",
+  options:SEVER4,
+  scale:"SEVER4"
+},
+
+{
+  name:"25",
+  section:"Curso Clínico",
+  type:"radio",
+  text:"Esses padrões existem há muitos anos e aparecem em vários contextos da vida?",
+  options:YNP,
+  scale:"YNP"
+}
+
+
+];
+
+const INDICATORS_CONFIG = {};
+
+    /**************************************************************
+     * HELPERS
+     **************************************************************/
+    const $ = (id) => document.getElementById(id);
+
+    function setStatus(text, type = "loading") {
+      const el = $("statusBox");
+      el.textContent = text;
+      el.className = `status ${type}`;
+    }
+
+    function normalizeCPF(cpf) {
+      return String(cpf || "").replace(/\D/g, "");
+    }
+
+    function getCpfFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+   
+      let cpf = params.get("cpf");
+      if (cpf) return normalizeCPF(cpf);
+
+      const raw = window.location.search.replace("?", "").trim();
+      if (/^\d{11}$/.test(raw)) return raw;
+
+      return "";
+    }
+
+    function getTestCodeFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("code") || TEST_CODE_FIXO;
+    }
+
+    function isObject(v) {
+      return v && typeof v === "object" && !Array.isArray(v);
+    }
+
+    /**
+     * Verifica se o "code" existe dentro do JSONB (array, objeto, objeto aninhado)
+     * Isso deixa o código flexível para diferentes formatos de JSONB.
+     */
+    function containsTestCode(jsonb, testCode) {
+      if (!jsonb) return false;
+
+      // string simples
+      if (typeof jsonb === "string") {
+        return jsonb === testCode;
+      }
+
+      // array
+      if (Array.isArray(jsonb)) {
+        return jsonb.some(item => {
+          if (typeof item === "string") return item === testCode;
+          if (isObject(item)) {
+            return item.code === testCode || item.test_code === testCode || item.id === testCode || containsTestCode(item, testCode);
+          }
+          return false;
+        });
+      }
+
+      // objeto
+      if (isObject(jsonb)) {
+        // Caso 1: chave do objeto é o próprio código
+        if (Object.prototype.hasOwnProperty.call(jsonb, testCode)) {
+          const value = jsonb[testCode];
+
+          // Se a chave existe e é true / objeto / string, tratamos como "existe"
+          // (depois as funções específicas interpretam o status)
+          if (value !== false && value !== null && value !== undefined) return true;
+
+          // se existir mas estiver false, ainda pode ser "não liberado/feito"
+          return false;
+        }
+
+        // Caso 2: objeto com campo code
+        if (jsonb.code === testCode || jsonb.test_code === testCode || jsonb.id === testCode) {
+          return true;
+        }
+
+        // Caso 3: busca recursiva
+        return Object.values(jsonb).some(v => containsTestCode(v, testCode));
+      }
+
+      return false;
+    }
+
+    /**
+     * Interpreta "tests_liberados"
+     * Aceita formatos como:
+     * - ["teste_a", "teste_b"]
+     * - [{"code":"teste_a"}]
+     * - {"teste_a": true, "teste_b": false}
+     * - {"lista":[...]} (aninhado)
+     */
+    function isTestLiberado(testsLiberados, testCode) {
+      if (!containsTestCode(testsLiberados, testCode)) return false;
+
+      if (isObject(testsLiberados) && Object.prototype.hasOwnProperty.call(testsLiberados, testCode)) {
+        const v = testsLiberados[testCode];
+        if (typeof v === "boolean") return v;
+        if (isObject(v) && "liberado" in v) return Boolean(v.liberado);
+        if (typeof v === "string") return !["false", "0", "nao", "não"].includes(v.toLowerCase());
+        return Boolean(v);
+      }
+
+      // Se está em array/string/objeto sem flag explícita, consideramos liberado
+      return true;
+    }
+
+    /**
+     * Interpreta "tests_feitos"
+     * Aceita formatos como:
+     * - ["teste_a", "teste_b"]
+     * - [{"code":"teste_a"}]
+     * - {"teste_a": true}
+     * - {"teste_a": {"feito": true}}
+     */
+    function isTestFeito(testsFeitos, testCode) {
+      if (!containsTestCode(testsFeitos, testCode)) return false;
+
+      if (isObject(testsFeitos) && Object.prototype.hasOwnProperty.call(testsFeitos, testCode)) {
+        const v = testsFeitos[testCode];
+        if (typeof v === "boolean") return v;
+        if (isObject(v) && "feito" in v) return Boolean(v.feito);
+        if (typeof v === "string") return !["false", "0", "nao", "não"].includes(v.toLowerCase());
+        return Boolean(v);
+      }
+
+      // Se apareceu em array, já consideramos que foi feito
+      return true;
+    }
+
+    function redirectToAreaPaciente(cpf) {
+      window.location.href = `${AREA_PACIENTE_URL}?${cpf}`;
+    }
+
+    function normalizeTestsFeitosForSave(current) {
+  const out = {};
+
+  if (!current) return out;
+
+  // string simples
+  if (typeof current === "string") {
+    out[current] = { feito: true };
+    return out;
+  }
+
+  // array
+  if (Array.isArray(current)) {
+    current.forEach(item => {
+      if (typeof item === "string") {
+        out[item] = { feito: true };
+      } else if (isObject(item)) {
+        const code = item.code || item.test_code || item.id;
+        if (code) {
+          out[code] = {
+            ...item,
+            feito: ("feito" in item) ? Boolean(item.feito) : true
+          };
+        }
+      }
+    });
+    return out;
+  }
+
+  // objeto
+  if (isObject(current)) {
+    Object.entries(current).forEach(([key, value]) => {
+      if (typeof value === "boolean") {
+        out[key] = { feito: value };
+      } else if (typeof value === "string") {
+        out[key] = { feito: !["false", "0", "nao", "não"].includes(value.toLowerCase()) };
+      } else if (isObject(value)) {
+        out[key] = { ...value };
+      } else {
+        out[key] = { feito: Boolean(value) };
+      }
+    });
+  }
+
+  return out;
+}
+
+function buildUpdatedTestsFeitos(currentTestsFeitos, testCode, submittedAtIso) {
+  const next = normalizeTestsFeitosForSave(currentTestsFeitos);
+
+  next[testCode] = {
+    ...(isObject(next[testCode]) ? next[testCode] : {}),
+    feito: true,
+    submitted_at: submittedAtIso
+  };
+
+  return next;
+}
+
+function interpretByCutoffs(score, cutoffs) {
+  if (!Number.isFinite(score) || !Array.isArray(cutoffs)) return null;
+
+  for (const rule of cutoffs) {
+    const min = (rule.min ?? -Infinity);
+    const max = (rule.max ?? Infinity);
+    if (score >= min && score <= max) return rule;
+  }
+  return null;
+}
+
+    /**************************************************************
+     * VALIDAÇÃO PRINCIPAL
+     **************************************************************/
+    async function validarAcessoAoTeste() {
+      const cpf = getCpfFromUrl();
+      const testCode = getTestCodeFromUrl();
+
+      if (!cpf || cpf.length !== 11) {
+        setStatus("CPF inválido ou ausente na URL.", "err");
+        return;
+      }
+
+      if (!testCode) {
+        setStatus("Código do teste não informado.", "err");
+        return;
+      }
+
+      // Meta info visual (só pra debug/controle)
+      $("metaInfo").classList.remove("hidden");
+      $("metaInfo").innerHTML = `
+        <span class="pill">CPF: ${cpf}</span>
+        <span class="pill">Teste: ${testCode}</span>
+      `;
+
+      setStatus("Consultando liberação do teste...", "loading");
+
+      const { data, error } = await supabaseClient
+        .from("patients")
+        .select("cpf, tests_liberados, tests_feitos")
+        .eq("cpf", cpf)
+        .maybeSingle();
+
+      if (error) {
+        console.error(error);
+        setStatus("Erro ao consultar a base de dados.", "err");
+        return;
+      }
+
+      if (!data) {
+        setStatus("CPF não encontrado.", "err");
+        return;
+      }
+
+      const liberado = isTestLiberado(data.tests_liberados, testCode);
+
+      if (!liberado) {
+        setStatus("Teste não liberado.", "warn");
+        return;
+      }
+
+      const feito = isTestFeito(data.tests_feitos, testCode);
+
+      if (feito) {
+        setStatus("Teste já realizado. Redirecionando para a área do paciente...", "ok");
+        setTimeout(() => redirectToAreaPaciente(cpf), 700);
+        return;
+      }
+
+      // Se chegou aqui, pode abrir o formulário
+      setStatus("Teste liberado. Formulário disponível.", "ok");
+      $("formWrap").classList.remove("hidden");
+    }
+
+
+/**************************************************************
+ * FORMULÁRIO DINÂMICO
+ **************************************************************/
+function slugify(str = "") {
+  return String(str)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+function escapeHtml(text = "") {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function normalizeOption(option) {
+  if (typeof option === "string") {
+    return { value: option, label: option };
+  }
+  if (option && typeof option === "object") {
+    return {
+      value: option.value ?? option.label ?? "",
+      label: option.label ?? option.value ?? ""
+    };
+  }
+  return { value: "", label: "" };
+}
+
+function renderDynamicForm(questions = []) {
+  const form = $("testForm");
+  form.innerHTML = "";
+  form.noValidate = true;
+
+  questions.forEach((q, index) => {
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const fieldName = getFieldName(q, index);
+    row.dataset.field = fieldName; 
+    const fieldId = `field_${fieldName}_${index}`;
+
+    const label = document.createElement("label");
+    label.className = "field-label";
+    label.setAttribute("for", fieldId);
+    label.textContent = q.text || `Pergunta ${index + 1}`;
+    row.appendChild(label);
+
+    const type = (q.type || "text").toLowerCase();
+
+    // INPUTS SIMPLES
+    if (["text", "email", "number", "date", "tel", "password"].includes(type)) {
+      const input = document.createElement("input");
+      input.type = type;
+      input.id = fieldId;
+      input.name = fieldName;
+      input.placeholder = q.placeholder || "";
+      input.required = !!q.required;
+      if (q.min !== undefined) input.min = q.min;
+      if (q.max !== undefined) input.max = q.max;
+      if (q.step !== undefined) input.step = q.step;
+      row.appendChild(input);
+      input.className = "field-control";
+      
+    }
+
+    // TEXTAREA
+    else if (type === "textarea") {
+      const textarea = document.createElement("textarea");
+      textarea.id = fieldId;
+      textarea.name = fieldName;
+      textarea.placeholder = q.placeholder || "";
+      textarea.required = !!q.required;
+      row.appendChild(textarea);
+      textarea.className = "field-control";
+    }
+
+    // SELECT
+    else if (type === "select") {
+      const select = document.createElement("select");
+      select.id = fieldId;
+      select.name = fieldName;
+      select.required = !!q.required;
+
+        select.className = "field-control";
+
+      (q.options || []).forEach(optRaw => {
+        const opt = normalizeOption(optRaw);
+        const optionEl = document.createElement("option");
+        optionEl.value = opt.value;
+        optionEl.textContent = opt.label;
+        select.appendChild(optionEl);
+      });
+
+      row.appendChild(select);
+    }
+
+    // RADIO
+    else if (type === "radio") {
+      const group = document.createElement("div");
+        group.className = "choice-group";
+      (q.options || []).forEach((optRaw, optIndex) => {
+        const opt = normalizeOption(optRaw);
+        const optionId = `${fieldId}_radio_${optIndex}`;
+
+        const wrap = document.createElement("label");
+        wrap.setAttribute("for", optionId);
+        wrap.className = "choice-item";
+        
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.id = optionId;
+        input.name = fieldName;
+        input.value = opt.value;
+        input.required = !!q.required && optIndex === 0;
+
+        const span = document.createElement("span");
+        span.className = "choice-text";
+        span.textContent = opt.label;
+
+        wrap.appendChild(input);
+        wrap.appendChild(span);
+        group.appendChild(wrap);
+      });
+
+      row.appendChild(group);
+    }
+
+    // CHECKBOX (duas formas)
+    // - sem options: checkbox único (boolean)
+    // - com options: grupo de checkbox (múltipla escolha)
+    else if (type === "checkbox") {
+      if (Array.isArray(q.options) && q.options.length > 0) {
+        const group = document.createElement("div");
+        group.className = "choice-group";
+       
+
+        (q.options || []).forEach((optRaw, optIndex) => {
+          const opt = normalizeOption(optRaw);
+          const optionId = `${fieldId}_check_${optIndex}`;
+
+          const wrap = document.createElement("label");
+          wrap.setAttribute("for", optionId);
+          wrap.className = "choice-item";
+     
+
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.id = optionId;
+          input.name = fieldName; // mesmo name = vira array no helper
+          input.value = opt.value;
+
+          const span = document.createElement("span");
+          span.className = "choice-text";
+          span.textContent = opt.label;
+
+          wrap.appendChild(input);
+          wrap.appendChild(span);
+          group.appendChild(wrap);
+        });
+
+        row.appendChild(group);
+      } else {
+        const wrap = document.createElement("label");
+        wrap.setAttribute("for", fieldId);
+        wrap.className = "choice-item";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = fieldId;
+        input.name = fieldName;
+        input.value = "true";
+
+       const span = document.createElement("span");
+        span.className = "choice-text";
+        span.textContent = q.checkboxText || "Marcar";
+
+        wrap.appendChild(input);
+        wrap.appendChild(span);
+        row.appendChild(wrap);
+      }
+    }
+
+    // FALLBACK
+    else {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.id = fieldId;
+      input.name = fieldName;
+      input.placeholder = q.placeholder || "";
+      input.required = !!q.required;
+      row.appendChild(input);
+      input.className = "field-control";
+    }
+
+    form.appendChild(row);
+  });
+
+
+  // botão enviar (mantém seu id)
+  const submitBtn = document.createElement("button");
+  submitBtn.type = "submit";
+  submitBtn.id = "submitBtn";
+  submitBtn.textContent = "Enviar";
+  form.appendChild(submitBtn);
+}
+
+function getFieldName(q, index) {
+  return q.name || `q_${index + 1}_${slugify(q.text || q.type || "campo")}`;
+}
+
+function getOptionLabelFromQuestion(q, value) {
+  if (Array.isArray(value)) {
+    return value.map(v => getOptionLabelFromQuestion(q, v));
+  }
+
+  const options = Array.isArray(q.options) ? q.options.map(normalizeOption) : [];
+  const found = options.find(opt => String(opt.value) === String(value));
+
+  return found ? found.label : value;
+}
+
+function buildResultsPerguntasRespostas(questions, answersObj) {
+  const respostas = [];
+
+  questions.forEach((q, index) => {
+    const fieldName = getFieldName(q, index);
+
+    // salva só o que foi respondido
+    if (!Object.prototype.hasOwnProperty.call(answersObj, fieldName)) return;
+
+    const rawValue = answersObj[fieldName];
+    const respostaFormatada = getOptionLabelFromQuestion(q, rawValue);
+
+    respostas.push({
+      pergunta: q.text || `Pergunta ${index + 1}`,
+      resposta: respostaFormatada
+    });
+  });
+
+  return respostas;
+}
+// === POLYFILL CSS.escape (salva em alguns mobiles/webviews) ===
+(function () {
+  if (!window.CSS) window.CSS = {};
+  if (typeof window.CSS.escape !== "function") {
+    window.CSS.escape = function (value) {
+      return String(value).replace(/[^a-zA-Z0-9_\-]/g, function (ch) {
+        return "\\" + ch;
+      });
+    };
+  }
+})();
+
+
+function formDataToObject(formEl) {
+  const fd = new FormData(formEl);
+  const result = {};
+
+  for (const [key, value] of fd.entries()) {
+    if (Object.prototype.hasOwnProperty.call(result, key)) {
+      if (!Array.isArray(result[key])) {
+        result[key] = [result[key]];
+      }
+      result[key].push(value);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  // Checkboxes boolean (sem options) não aparecem se desmarcados.
+  // Então vamos completar com false.
+  const checkboxes = formEl.querySelectorAll('input[type="checkbox"]');
+  const checkboxNames = new Set([...checkboxes].map(c => c.name));
+
+  checkboxNames.forEach(name => {
+    const group = [...formEl.querySelectorAll(`input[type="checkbox"][name="${CSS.escape(name)}"]`)];
+    if (group.length === 1) {
+      // checkbox único -> boolean
+      result[name] = group[0].checked;
+    } else {
+      // grupo -> array (se nenhum marcado, array vazio)
+      if (!Object.prototype.hasOwnProperty.call(result, name)) {
+        result[name] = [];
+      } else if (!Array.isArray(result[name])) {
+        result[name] = [result[name]];
+      }
+    }
+  });
+
+  return result;
+}
+
+
+/**************************************************************
+ * CÁLCULO DE PONTUAÇÃO
+ **************************************************************/
+function getQuestionByFieldName(questions, fieldName) {
+  for (let i = 0; i < questions.length; i++) {
+    const qName = getFieldName(questions[i], i);
+    if (qName === fieldName) return { question: questions[i], index: i };
+  }
+  return null;
+}
+
+function getFieldNameByQuestionRef(questions, ref) {
+  // ref pode ser nome ("tea_reciprocidade") ou número da posição (1-based)
+  if (typeof ref === "string") return ref;
+  if (typeof ref === "number") {
+    const idx = ref - 1;
+    if (idx >= 0 && idx < questions.length) {
+      return getFieldName(questions[idx], idx);
+    }
+  }
+  return null;
+}
+
+function getMaxScaleScore(scaleName) {
+  const map = SCALE_SCORE_MAPS[scaleName] || {};
+  const nums = Object.values(map).filter(v => Number.isFinite(v));
+  return nums.length ? Math.max(...nums) : 0;
+}
+
+function scoreSingleAnswer(question, rawValue) {
+  if (!question || !question.scale) return null;
+
+  const scoreMap = SCALE_SCORE_MAPS[question.scale];
+  if (!scoreMap) return null;
+
+  // checkbox múltiplo / arrays não entram aqui (a menos que você queira tratar separado)
+  if (Array.isArray(rawValue)) return null;
+
+  const baseScore = scoreMap[rawValue];
+
+  // resposta não pontuável ("Não sei", "Não se aplica", etc.)
+  if (baseScore === null || baseScore === undefined) {
+    return {
+      rawValue,
+      baseScore: null,
+      score: null,
+      reverse: !!question.reverse,
+      ignored: true,
+      reason: "Resposta sem pontuação"
+    };
+  }
+
+  const maxScore = getMaxScaleScore(question.scale);
+  const finalScore = question.reverse ? (maxScore - baseScore) : baseScore;
+
+  return {
+    rawValue,
+    baseScore,
+    score: finalScore,
+    reverse: !!question.reverse,
+    ignored: false,
+    maxScore,
+    scale: question.scale
+  };
+}
+
+function calculateQuestionScores(questions, answersObj) {
+  const perQuestion = {};
+  const questionsIndex = []; // útil para depuração
+
+  questions.forEach((q, index) => {
+    const fieldName = getFieldName(q, index);
+    const hasAnswer = Object.prototype.hasOwnProperty.call(answersObj, fieldName);
+
+    if (!hasAnswer) return;
+
+    const rawValue = answersObj[fieldName];
+    const scored = scoreSingleAnswer(q, rawValue);
+
+    perQuestion[fieldName] = {
+      index: index + 1,
+      name: fieldName,
+      text: q.text || `Pergunta ${index + 1}`,
+      ...scored
+    };
+
+    questionsIndex.push({
+      n: index + 1,
+      name: fieldName,
+      text: q.text || `Pergunta ${index + 1}`
+    });
+  });
+
+  return { perQuestion, questionsIndex };
+}
+
+function calculateIndicators(questions, perQuestionScores, indicatorsConfig) {
+  const indicators = {};
+
+  Object.entries(indicatorsConfig || {}).forEach(([indicatorKey, cfg]) => {
+    const refs = Array.isArray(cfg.questions) ? cfg.questions : [];
+    const fieldNames = refs
+      .map(ref => getFieldNameByQuestionRef(questions, ref))
+      .filter(Boolean);
+
+    let sum = 0;
+    let maxPossible = 0;
+    let answeredCount = 0;
+    let ignoredCount = 0;
+
+    const items = [];
+
+    fieldNames.forEach(fieldName => {
+      const qScore = perQuestionScores[fieldName];
+
+      if (!qScore) {
+        items.push({ fieldName, included: false, reason: "Sem resposta" });
+        return;
+      }
+
+      if (qScore.ignored || qScore.score === null || qScore.score === undefined) {
+        ignoredCount++;
+        items.push({
+          fieldName,
+          included: false,
+          reason: qScore.reason || "Ignorada",
+          rawValue: qScore.rawValue
+        });
+        return;
+      }
+
+      answeredCount++;
+      sum += qScore.score;
+      maxPossible += (qScore.maxScore ?? 0);
+
+      items.push({
+        fieldName,
+        included: true,
+        score: qScore.score,
+        rawValue: qScore.rawValue
+      });
+    });
+
+    indicators[indicatorKey] = {
+      label: cfg.label || indicatorKey,
+      sum,
+      maxPossible,
+      answeredCount,
+      ignoredCount,
+      percent: maxPossible > 0 ? Number(((sum / maxPossible) * 100).toFixed(2)) : null,
+      items
+    };
+  });
+
+  return indicators;
+}
+
+function buildScoringResult(questions, answersObj, indicatorsConfig) {
+  const { perQuestion, questionsIndex } = calculateQuestionScores(questions, answersObj);
+  const indicators = calculateIndicators(questions, perQuestion, indicatorsConfig);
+
+  return {
+    questionsIndex,     // mapa do nº da questão -> name (útil pra auditoria)
+    perQuestion,        // pontuação questão por questão
+    indicators          // somas dos domínios
+  };
+}
+
+function clearInvalidUI(formEl){
+  formEl.querySelectorAll(".row.invalid").forEach(r => r.classList.remove("invalid"));
+  formEl.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute("aria-invalid"));
+}
+
+function isRequiredAnswered(q, index, formEl){
+  if (!q?.required) return true;
+
+  const fieldName = getFieldName(q, index);
+  const type = String(q.type || "text").toLowerCase();
+
+  if (type === "radio") {
+    return !!formEl.querySelector(`input[type="radio"][name="${CSS.escape(fieldName)}"]:checked`);
+  }
+
+  if (type === "checkbox") {
+    if (Array.isArray(q.options) && q.options.length > 0) {
+      return formEl.querySelectorAll(`input[type="checkbox"][name="${CSS.escape(fieldName)}"]:checked`).length > 0;
+    }
+    const el = formEl.querySelector(`input[type="checkbox"][name="${CSS.escape(fieldName)}"]`);
+    return !!el && el.checked;
+  }
+
+  const el = formEl.querySelector(`[name="${CSS.escape(fieldName)}"]`);
+  if (!el) return false;
+
+  return String(el.value ?? "").trim() !== "";
+}
+
+function markInvalidRequired(questions, formEl){
+  const invalidRows = [];
+
+  questions.forEach((q, index) => {
+    if (!q.required) return;
+
+    const fieldName = getFieldName(q, index);
+    const ok = isRequiredAnswered(q, index, formEl);
+
+    if (!ok) {
+      const row = formEl.querySelector(`.row[data-field="${CSS.escape(fieldName)}"]`);
+      if (row && !row.classList.contains("invalid")) {
+        row.classList.add("invalid");
+        invalidRows.push(row);
+      }
+
+      // marca aria-invalid (melhora acessibilidade e ajuda alguns mobiles)
+      const type = String(q.type || "text").toLowerCase();
+      if (type === "radio" || type === "checkbox") {
+        formEl.querySelectorAll(`[name="${CSS.escape(fieldName)}"]`).forEach(el => el.setAttribute("aria-invalid","true"));
+      } else {
+        const el = formEl.querySelector(`[name="${CSS.escape(fieldName)}"]`);
+        if (el) el.setAttribute("aria-invalid","true");
+      }
+    }
+  });
+
+  return invalidRows;
+}
+
+function scrollToRow(row){
+  if (!row) return;
+
+  // calcula posição absoluta
+  const y = row.getBoundingClientRect().top + window.pageYOffset - 12;
+
+  // método mais confiável em mobile/webview
+  window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+
+  // fallback "forçado" (caso smooth seja ignorado)
+  setTimeout(() => {
+    document.documentElement.scrollTop = y;
+    document.body.scrollTop = y;
+  }, 80);
+}
+    /**************************************************************
+     * ENVIO DO FORMULÁRIO (EXEMPLO)
+     * Aqui você coloca seu save real.
+     **************************************************************/
+  $("testForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formEl = e.target;
+
+  // 1) validação antes de “enviar”
+  clearInvalidUI(formEl);
+
+  // (opcional) validações nativas (email, pattern etc.)
+ if (!formEl.checkValidity()) {
+  const isMobile = window.matchMedia("(pointer: coarse)").matches;
+
+  // no desktop pode usar bolha nativa; no mobile isso atrapalha
+  if (!isMobile && typeof formEl.reportValidity === "function") {
+    formEl.reportValidity();
+  }
+
+  const invalidRows = markInvalidRequired(FORM_QUESTIONS, formEl);
+  setStatus("Responda as perguntas obrigatórias destacadas em vermelho.", "warn");
+
+  const targetRow = invalidRows[0] || formEl.querySelector(":invalid")?.closest(".row");
+
+  // dá 1 tick pra aplicar classes antes do scroll (mobile)
+  setTimeout(() => scrollToRow(targetRow), 50);
+  return;
+}
+
+  // valida obrigatórias do seu modelo (especialmente radios)
+  const invalidRows = markInvalidRequired(FORM_QUESTIONS, formEl);
+ if (invalidRows.length) {
+  setStatus("Responda as perguntas obrigatórias destacadas em vermelho.", "warn");
+  setTimeout(() => scrollToRow(invalidRows[0]), 50);
+  return;
+}
+
+  const btn = $("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Enviando...";
+
+  try {
+    const cpf = getCpfFromUrl();
+    const testCode = getTestCodeFromUrl();
+    const submittedAt = new Date().toISOString();
+
+    // seu helper que preserva checkbox múltiplo
+    const rawPayload = formDataToObject(e.target);
+
+// respostas legíveis (vai para "results")
+const respostasLegiveis = buildResultsPerguntasRespostas(FORM_QUESTIONS, rawPayload);
+
+// cálculo de pontuação
+const scoring = buildScoringResult(FORM_QUESTIONS, rawPayload, INDICATORS_CONFIG);
+const resultsPayload = respostasLegiveis;
+const resultsMetaPayload = Object.fromEntries(
+  Object.entries(scoring.indicators).flatMap(([key, indicator]) => {
+    const cfg = INDICATORS_CONFIG[key];
+    const entries = [[key, indicator.sum]];
+    if (Array.isArray(cfg?.cutoffs) && cfg.cutoffs.length) {
+      const rule = interpretByCutoffs(indicator.sum, cfg.cutoffs);
+      if (rule?.text) entries.push([`${key}_interpretacao`, rule.text]);
+    }
+
+    return entries;
+  })
+);
+
+    // 1) Revalida no patients (não confiar só na validação inicial)
+    const { data: patient, error: patientError } = await supabaseClient
+      .from("patients")
+      .select("cpf, tests_liberados, tests_feitos")
+      .eq("cpf", cpf)
+      .maybeSingle();
+
+    if (patientError) {
+      console.error(patientError);
+      throw new Error("Erro ao consultar paciente.");
+    }
+
+    if (!patient) {
+      throw new Error("CPF não encontrado.");
+    }
+
+    const liberado = isTestLiberado(patient.tests_liberados, testCode);
+    if (!liberado) {
+      throw new Error("Teste não liberado.");
+    }
+
+    const jaFeito = isTestFeito(patient.tests_feitos, testCode);
+    if (jaFeito) {
+      // já feito -> volta pra área do paciente
+      redirectToAreaPaciente(cpf);
+      return;
+    }
+
+   const { error: insertError } = await supabaseClient
+  .from("respostas")
+  .insert([
+    {
+      cpf: cpf,
+      code: testCode,
+      submitted_at: submittedAt,
+      results: resultsPayload,          // array puro pergunta/resposta
+      results_meta: resultsMetaPayload  // bruto + pontuação
+    }
+  ]);
+
+   if (insertError) {
+  console.error("ERRO INSERT respostas:", insertError);
+  throw new Error(
+    `Erro ao salvar respostas: ${insertError.message || ""} ${insertError.details || ""} ${insertError.hint || ""}`.trim()
+  );
+}
+
+    // 3) Atualiza tests_feitos no patients (JSONB)
+    const nextTestsFeitos = buildUpdatedTestsFeitos(patient.tests_feitos, testCode, submittedAt);
+
+    const { error: updateError } = await supabaseClient
+      .from("patients")
+      .update({
+        tests_feitos: nextTestsFeitos
+      })
+      .eq("cpf", cpf);
+
+    if (updateError) {
+      console.error(updateError);
+      throw new Error("Resposta salva, mas falhou ao marcar teste como feito.");
+    }
+
+    // 4) Sucesso
+    setStatus("Respostas enviadas com sucesso. Redirecionando...", "ok");
+
+    setTimeout(() => {
+      redirectToAreaPaciente(cpf);
+    }, 700);
+
+  } catch (err) {
+    console.error(err);
+    const msg = err?.message || "Erro ao enviar o formulário.";
+    setStatus(msg, "err");
+    alert(msg);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Enviar";
+  }
+});
+// Monta o formulário dinâmico
+
+function setupLiveInvalidCleanup(questions){
+  const formEl = $("testForm");
+
+  const handler = (e) => {
+    const row = e.target.closest(".row");
+    if (!row) return;
+
+    const fieldName = row.dataset.field;
+    if (!fieldName) return;
+
+    const idx = questions.findIndex((q, i) => getFieldName(q, i) === fieldName);
+    if (idx < 0) return;
+
+    if (isRequiredAnswered(questions[idx], idx, formEl)) {
+      row.classList.remove("invalid");
+      formEl.querySelectorAll(`[name="${CSS.escape(fieldName)}"]`)
+        .forEach(el => el.removeAttribute("aria-invalid"));
+    }
+  };
+
+  formEl.addEventListener("change", handler);
+  formEl.addEventListener("input", handler);
+}
+// Inicia a validação
+renderDynamicForm(FORM_QUESTIONS);
+setupLiveInvalidCleanup(FORM_QUESTIONS);
+validarAcessoAoTeste();
+
+  </script>
+</body>
+</html>
