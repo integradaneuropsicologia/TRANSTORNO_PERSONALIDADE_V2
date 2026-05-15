@@ -373,220 +373,916 @@ const SCALE_SCORE_MAPS = {
     /**************************************************************
  * CONFIGURAÇÃO DAS PERGUNTAS (DINÂMICO)
  **************************************************************/
+
 const FORM_QUESTIONS = [
- {
-  name:"1",
-  section:"Cluster A — Paranoide",
-  type:"radio",
-  text:"Desconfiança persistente de que outras pessoas querem explorar, prejudicar ou enganar você?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"2",
-  section:"Cluster A — Paranoide",
-  type:"radio",
-  text:"Dificuldade em confiar nas pessoas por medo de que usem suas informações contra você?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"3",
-  section:"Cluster A — Paranoide",
-  type:"radio",
-  text:"Tendência a interpretar comentários neutros como críticas ou ataques?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"1",
+    section:"Critérios Gerais de Transtorno de Personalidade",
+    type:"radio",
+    text:"Você apresenta, há vários anos, padrões persistentes de pensamento, emoção, comportamento ou relacionamento que causam conflitos, sofrimento ou prejuízo na sua vida?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"2",
+    section:"Critérios Gerais de Transtorno de Personalidade",
+    type:"radio",
+    text:"Seus padrões persistentes de pensamento, emoção, comportamento ou relacionamento começaram no fim da adolescência ou no início da vida adulta?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"3",
+    section:"Critérios Gerais de Transtorno de Personalidade",
+    type:"radio",
+    text:"Seus padrões persistentes de pensamento, emoção, comportamento ou relacionamento aparecem em diferentes contextos, como família, trabalho, amizades, vida social ou relacionamentos afetivos?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"4",
+    section:"Critérios Gerais de Transtorno de Personalidade",
+    type:"radio",
+    text:"Seus padrões persistentes de pensamento, emoção, comportamento ou relacionamento costumam se repetir mesmo quando causam prejuízo, conflitos ou afastamento de outras pessoas?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"5",
+    section:"Critérios Gerais de Transtorno de Personalidade",
+    type:"radio",
+    text:"Pessoas próximas já disseram que sua forma habitual de reagir, se relacionar, confiar, controlar emoções ou lidar com críticas causa problemas frequentes?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
 
-{
-  name:"4",
-  section:"Cluster A — Esquizoide",
-  type:"radio",
-  text:"Pouco interesse em relações íntimas ou proximidade emocional com outras pessoas?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"5",
-  section:"Cluster A — Esquizoide",
-  type:"radio",
-  text:"Preferência clara por atividades solitárias na maior parte do tempo?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"6",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você costuma desconfiar que outras pessoas querem explorar, prejudicar, enganar ou tirar vantagem de você, mesmo sem provas claras?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"7",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você costuma duvidar da lealdade, fidelidade ou sinceridade de amigos, familiares, parceiros ou colegas sem evidências suficientes?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"8",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você evita contar informações pessoais por medo de que outras pessoas usem essas informações contra você?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"9",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você interpreta comentários neutros, brincadeiras ou atitudes comuns como críticas, indiretas, ameaças ou ataques pessoais?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"10",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você guarda mágoa, rancor ou ressentimento por muito tempo quando sente que alguém o ofendeu, humilhou ou prejudicou?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"11",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você reage com raiva, defesa intensa ou contra-ataque quando acredita que sua reputação, caráter ou intenção foram atacados?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"12",
+    section:"Cluster A — Personalidade Paranoide",
+    type:"radio",
+    text:"Você costuma suspeitar repetidamente de traição, infidelidade ou deslealdade do parceiro sem evidências suficientes?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"6",
-  section:"Cluster A — Esquizotípico",
-  type:"radio",
-  text:"Crenças incomuns ou pensamento mágico (sinais, telepatia, pressentimentos)?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"7",
-  section:"Cluster A — Esquizotípico",
-  type:"radio",
-  text:"Sensação de experiências perceptivas estranhas ou presença incomum ao redor?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"13",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você tem pouco interesse em ter relações íntimas, vínculos afetivos próximos ou convivência emocional com outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"14",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você prefere realizar a maior parte das atividades sozinho, sem sentir necessidade de companhia ou participação social?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"15",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você sente pouco interesse por relações sexuais, intimidade física ou envolvimento afetivo com outra pessoa?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"16",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você sente pouco prazer em atividades sociais, familiares, recreativas ou compartilhadas com outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"17",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você tem poucos amigos próximos ou poucas pessoas de confiança fora da família imediata?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"18",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Você costuma ser indiferente a elogios, críticas, aprovação ou desaprovação de outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"19",
+    section:"Cluster A — Personalidade Esquizoide",
+    type:"radio",
+    text:"Outras pessoas já disseram que você parece emocionalmente frio, distante, pouco expressivo ou indiferente?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"8",
-  section:"Cluster B — Antissocial",
-  type:"radio",
-  text:"Tendência a manipular ou enganar pessoas para obter vantagens?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"9",
-  section:"Cluster B — Antissocial",
-  type:"radio",
-  text:"Pouco remorso ou culpa após prejudicar alguém?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"20",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você costuma acreditar que acontecimentos comuns, comentários, olhares, músicas, números ou sinais têm mensagens especiais dirigidas a você?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"21",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você costuma ter crenças incomuns, como pressentimentos, telepatia, poderes especiais, energias, sinais ou pensamento mágico que influenciam suas decisões?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"22",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você já teve experiências perceptivas estranhas, como sentir presenças, perceber sinais incomuns, ouvir sons vagos ou sentir sensações corporais difíceis de explicar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"23",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"As pessoas já disseram que sua fala parece vaga, indireta, muito abstrata, confusa, estranha ou difícil de acompanhar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"24",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você costuma desconfiar muito das intenções das pessoas, mesmo quando não há provas claras de ameaça ou prejuízo?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"25",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Outras pessoas já disseram que sua aparência, comportamento, forma de falar ou interesses parecem estranhos, excêntricos ou incomuns?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"26",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você tem poucos vínculos próximos porque se sente deslocado, desconfiado, diferente ou desconfortável em relações sociais?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"27",
+    section:"Cluster A — Personalidade Esquizotípica",
+    type:"radio",
+    text:"Você sente ansiedade social intensa que não melhora muito com familiaridade e está mais ligada à desconfiança do que ao medo de julgamento?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"10",
-  section:"Cluster B — Borderline",
-  type:"radio",
-  text:"Relacionamentos intensos e instáveis com alternância entre idealização e desvalorização?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"11",
-  section:"Cluster B — Borderline",
-  type:"radio",
-  text:"Medo intenso de abandono ou rejeição?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"12",
-  section:"Cluster B — Borderline",
-  type:"radio",
-  text:"Oscilações emocionais intensas ao longo do dia?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"28",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Desde a adolescência, você costuma desrespeitar regras, leis, limites ou direitos de outras pessoas sem grande preocupação com as consequências?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"29",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Desde a adolescência, você já enganou, mentiu, manipulou ou usou pessoas para obter vantagem, dinheiro, prazer, status ou escapar de consequências?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"30",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Desde a adolescência, você costuma agir por impulso sem planejar ou considerar o impacto das suas atitudes nos outros?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"31",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Desde a adolescência, você apresenta irritabilidade, agressividade, brigas, ameaças, intimidação ou agressões físicas recorrentes?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"32",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Você costuma se envolver em situações perigosas para você ou para outras pessoas sem se preocupar suficientemente com segurança?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"33",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Você costuma descumprir obrigações financeiras, familiares, profissionais ou sociais de forma repetida e sem justificativa proporcional?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"34",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Você sente pouca culpa, remorso ou arrependimento após prejudicar, enganar, humilhar, agredir ou explorar alguém?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"35",
+    section:"Cluster B — Personalidade Antissocial",
+    type:"radio",
+    text:"Antes dos 15 anos, você teve comportamentos repetidos como agressão, crueldade, roubo, mentiras graves, destruição de propriedade, fuga de casa ou violação séria de regras?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
 
-{
-  name:"13",
-  section:"Cluster B — Histriônico",
-  type:"radio",
-  text:"Desconforto quando não é o centro das atenções em situações sociais?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"14",
-  section:"Cluster B — Histriônico",
-  type:"radio",
-  text:"Tendência a dramatizar emoções ou buscar aprovação constante?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"36",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você tem medo intenso de ser abandonado, rejeitado ou deixado por pessoas importantes para você?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"37",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você faz esforços intensos para impedir que alguém se afaste, como insistir, implorar, cobrar, ligar repetidamente, ameaçar terminar ou ameaçar se machucar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"38",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Seus relacionamentos costumam ser intensos, instáveis e marcados por alternância entre proximidade intensa, decepção, raiva, afastamento e reconciliação?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"39",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Sua visão sobre você mesmo muda muito, alternando entre sentir-se capaz, bom ou especial e depois sentir-se sem valor, ruim ou vazio?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"40",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você age impulsivamente em áreas que podem causar prejuízo, como gastos, sexo, alimentação, direção, substâncias, brigas ou decisões importantes?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"41",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você já teve autoagressão, ameaça de suicídio, tentativa de suicídio ou vontade intensa de se machucar em momentos de rejeição, abandono, raiva, vazio ou desespero?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"42",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Seu humor muda de forma intensa em poucas horas, principalmente após crítica, rejeição, frustração, conflito ou medo de abandono?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"43",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você sente vazio interno frequente, sensação de falta de sentido, solidão intensa ou sensação de estar incompleto?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"44",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Você sente raiva intensa e difícil de controlar quando se sente rejeitado, criticado, contrariado, ignorado ou injustiçado?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"45",
+    section:"Cluster B — Personalidade Borderline",
+    type:"radio",
+    text:"Durante estresse intenso, você já ficou muito desconfiado, sentiu que as pessoas estavam contra você ou sentiu desligamento da realidade ou do próprio corpo?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"15",
-  section:"Cluster B — Narcisista",
-  type:"radio",
-  text:"Necessidade frequente de admiração ou reconhecimento especial?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"16",
-  section:"Cluster B — Narcisista",
-  type:"radio",
-  text:"Dificuldade em reconhecer ou considerar sentimentos e necessidades de outras pessoas?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"46",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você se sente desconfortável, irritado ou desvalorizado quando não é o centro das atenções em situações sociais?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"47",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você costuma usar sedução, aparência, charme ou comportamento provocativo para obter atenção, aprovação ou influência sobre outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"48",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Suas emoções costumam mudar rapidamente e parecer intensas no momento, mas durar pouco ou parecer superficiais para outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"49",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você usa aparência física, roupas, gestos, expressividade ou exposição pessoal para chamar atenção com frequência?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"50",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"As pessoas já disseram que sua fala é muito impressionista, dramática ou cheia de intensidade, mas com poucos detalhes objetivos?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"51",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você costuma expressar emoções de forma teatral, exagerada, dramática ou mais intensa do que a situação exigiria?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"52",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você costuma ser facilmente influenciado por elogios, críticas, opinião dos outros, ambiente ou pessoas emocionalmente importantes?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"53",
+    section:"Cluster B — Personalidade Histriônica",
+    type:"radio",
+    text:"Você costuma considerar relações mais íntimas, próximas ou especiais do que a outra pessoa parece considerar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"17",
-  section:"Cluster C — Evitativo",
-  type:"radio",
-  text:"Evita situações sociais por medo intenso de crítica, vergonha ou rejeição?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"18",
-  section:"Cluster C — Evitativo",
-  type:"radio",
-  text:"Sente-se socialmente inadequado ou inferior aos outros?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"54",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você costuma se considerar mais importante, capaz, inteligente, especial ou superior do que a maioria das pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"55",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você passa muito tempo imaginando sucesso extraordinário, poder, prestígio, riqueza, beleza, inteligência superior ou reconhecimento elevado?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"56",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você acredita que poucas pessoas conseguem realmente compreender sua inteligência, sensibilidade, capacidade, visão de mundo ou importância?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"57",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você precisa receber elogios, admiração, atenção ou reconhecimento para se sentir valorizado?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"58",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você espera receber tratamento especial, prioridade, favores ou concessões mesmo quando a regra é igual para todos?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"59",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você costuma usar relações, contatos, favores ou a boa vontade de outras pessoas para alcançar seus próprios objetivos?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"60",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você tem dificuldade para perceber, validar ou levar a sério os sentimentos, necessidades ou limites emocionais de outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"61",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"Você sente incômodo, inveja ou irritação quando outra pessoa recebe elogio, destaque, sucesso ou reconhecimento?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"62",
+    section:"Cluster B — Personalidade Narcisista",
+    type:"radio",
+    text:"As pessoas já disseram que você age de forma arrogante, superior, fria, convencida, autoritária ou difícil de contrariar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"19",
-  section:"Cluster C — Dependente",
-  type:"radio",
-  text:"Grande dificuldade em tomar decisões sem orientação ou confirmação de outras pessoas?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"20",
-  section:"Cluster C — Dependente",
-  type:"radio",
-  text:"Medo intenso de ficar sozinho ou sem apoio emocional?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"63",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você evita atividades sociais, profissionais ou acadêmicas por medo de crítica, reprovação, rejeição, vergonha ou humilhação?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"64",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você evita se aproximar de pessoas novas, grupos ou oportunidades sociais quando não tem certeza de que será aceito ou bem recebido?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"65",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você se contém em relacionamentos íntimos por medo de ser ridicularizado, rejeitado, criticado ou envergonhado?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"66",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você fica frequentemente preocupado com a possibilidade de ser criticado, rejeitado ou exposto negativamente em situações sociais?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"67",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você se sente socialmente inadequado, inferior, sem atrativos, incapaz ou menos interessante do que outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"68",
+    section:"Cluster C — Personalidade Evitativa",
+    type:"radio",
+    text:"Você evita assumir riscos pessoais, iniciar projetos, conhecer pessoas ou tentar atividades novas por medo de passar vergonha ou fracassar?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"21",
-  section:"Cluster C — Obsessivo-Compulsivo",
-  type:"radio",
-  text:"Preocupação excessiva com ordem, regras, perfeccionismo ou controle?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"22",
-  section:"Cluster C — Obsessivo-Compulsivo",
-  type:"radio",
-  text:"Dificuldade em delegar tarefas porque acredita que os outros não farão corretamente?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
+  {
+    name:"69",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você tem grande dificuldade para tomar decisões do dia a dia sem receber orientação, confirmação ou aprovação de outras pessoas?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"70",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você precisa que outras pessoas assumam responsabilidade por áreas importantes da sua vida, como finanças, trabalho, saúde, decisões ou organização da rotina?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"71",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você tem dificuldade para discordar de outras pessoas por medo de perder apoio, aprovação, proteção ou vínculo?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"72",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você tem dificuldade para iniciar projetos, tarefas ou decisões sozinho por falta de confiança no próprio julgamento ou capacidade?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"73",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você faz coisas desagradáveis, aceita situações ruins ou ultrapassa seus próprios limites para não perder cuidado, apoio ou aprovação de alguém?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"74",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você se sente muito desconfortável, indefeso, inseguro ou incapaz quando precisa ficar sozinho ou resolver problemas sem apoio?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"75",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Quando uma relação importante termina ou se enfraquece, você sente necessidade urgente de encontrar outra pessoa que ofereça cuidado, apoio ou segurança?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"76",
+    section:"Cluster C — Personalidade Dependente",
+    type:"radio",
+    text:"Você tem medo intenso e persistente de ser deixado sozinho, abandonado ou incapaz de cuidar de si mesmo?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"23",
-  section:"Funcionamento da Personalidade",
-  type:"radio",
-  text:"Conflitos interpessoais frequentes ou relações instáveis ao longo da vida?",
-  options:FREQ5,
-  scale:"FREQ5"
-},
-{
-  name:"24",
-  section:"Funcionamento da Personalidade",
-  type:"radio",
-  text:"Dificuldade persistente em controlar impulsos ou emoções?",
-  options:SEVER4,
-  scale:"SEVER4"
-},
+  {
+    name:"77",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você se preocupa tanto com detalhes, listas, regras, ordem, organização ou horários que às vezes perde o objetivo principal da atividade?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"78",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Seu perfeccionismo atrapalha a conclusão de tarefas porque você sente que o resultado nunca está suficientemente bom?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"79",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você se dedica tanto ao trabalho, produtividade, deveres ou obrigações que deixa lazer, descanso, relações ou prazer em segundo plano?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"80",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você é muito rígido em questões de moral, ética, certo e errado, regras ou forma correta de agir?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"81",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você tem dificuldade para descartar objetos, documentos, itens antigos ou coisas sem utilidade por achar que podem ser necessários algum dia?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"82",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você tem dificuldade para delegar tarefas porque acredita que os outros não farão da forma correta ou no padrão que você espera?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"83",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você controla gastos, dinheiro, recursos ou bens de forma rígida por medo de desperdício, insegurança futura ou necessidade de controle?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
+  {
+    name:"84",
+    section:"Cluster C — Personalidade Obsessivo-Compulsiva",
+    type:"radio",
+    text:"Você costuma ser rígido, teimoso ou inflexível quando as pessoas querem fazer algo de um jeito diferente do seu?",
+    options:FREQ5,
+    scale:"FREQ5",
+    required:true
+  },
 
-{
-  name:"25",
-  section:"Curso Clínico",
-  type:"radio",
-  text:"Esses padrões existem há muitos anos e aparecem em vários contextos da vida?",
-  options:YNP,
-  scale:"YNP"
-}
+  {
+    name:"85",
+    section:"Funcionamento e Prejuízo",
+    type:"radio",
+    text:"Seus padrões de desconfiança, isolamento, excentricidade, impulsividade, instabilidade emocional, busca de atenção, grandiosidade, evitação, dependência ou rigidez causam prejuízo nos relacionamentos afetivos?",
+    options:SEVER4,
+    scale:"SEVER4",
+    required:true
+  },
+  {
+    name:"86",
+    section:"Funcionamento e Prejuízo",
+    type:"radio",
+    text:"Seus padrões de desconfiança, isolamento, excentricidade, impulsividade, instabilidade emocional, busca de atenção, grandiosidade, evitação, dependência ou rigidez causam prejuízo na vida familiar?",
+    options:SEVER4,
+    scale:"SEVER4",
+    required:true
+  },
+  {
+    name:"87",
+    section:"Funcionamento e Prejuízo",
+    type:"radio",
+    text:"Seus padrões de desconfiança, isolamento, excentricidade, impulsividade, instabilidade emocional, busca de atenção, grandiosidade, evitação, dependência ou rigidez causam prejuízo no trabalho, estudos ou vida profissional?",
+    options:SEVER4,
+    scale:"SEVER4",
+    required:true
+  },
+  {
+    name:"88",
+    section:"Funcionamento e Prejuízo",
+    type:"radio",
+    text:"Seus padrões de desconfiança, isolamento, excentricidade, impulsividade, instabilidade emocional, busca de atenção, grandiosidade, evitação, dependência ou rigidez causam prejuízo em amizades ou convivência social?",
+    options:SEVER4,
+    scale:"SEVER4",
+    required:true
+  },
+  {
+    name:"89",
+    section:"Funcionamento e Prejuízo",
+    type:"radio",
+    text:"Seus padrões de personalidade já causaram término de relacionamento, afastamento de pessoas, demissão, advertência, isolamento, prejuízo financeiro, problemas legais ou conflitos graves?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
 
+  {
+    name:"90",
+    section:"Diferenciais e Exclusões",
+    type:"radio",
+    text:"Esses padrões de personalidade aparecem apenas durante crises de ansiedade, depressão, estresse intenso, trauma, uso de substâncias ou privação de sono?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"91",
+    section:"Diferenciais e Exclusões",
+    type:"radio",
+    text:"Esses padrões de personalidade aparecem apenas durante fases de humor elevado, irritabilidade intensa, aceleração, impulsividade aumentada ou redução da necessidade de sono?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"92",
+    section:"Diferenciais e Exclusões",
+    type:"radio",
+    text:"Esses padrões de personalidade começaram ou pioraram claramente após uso de álcool, drogas, anabolizantes, estimulantes, antidepressivos, corticoides ou outras substâncias?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"93",
+    section:"Diferenciais e Exclusões",
+    type:"radio",
+    text:"Esses padrões de personalidade começaram ou pioraram claramente após traumatismo craniano, convulsões, doença neurológica, alteração hormonal ou outra condição médica importante?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"94",
+    section:"Diferenciais e Exclusões",
+    type:"radio",
+    text:"Esses padrões de personalidade são melhor explicados por autismo, TDAH, deficiência intelectual, psicose, transtorno bipolar, depressão, ansiedade ou trauma?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
 
+  {
+    name:"95",
+    section:"Confirmação por Outra Pessoa",
+    type:"radio",
+    text:"Uma pessoa próxima diria que seus padrões de desconfiança, isolamento, excentricidade, impulsividade, instabilidade emocional, busca de atenção, grandiosidade, evitação, dependência ou rigidez existem há muitos anos?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"96",
+    section:"Confirmação por Outra Pessoa",
+    type:"radio",
+    text:"Uma pessoa próxima diria que seus padrões de personalidade aparecem em diferentes contextos, como família, trabalho, amizades ou relacionamentos?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+  {
+    name:"97",
+    section:"Confirmação por Outra Pessoa",
+    type:"radio",
+    text:"Uma pessoa próxima diria que seus padrões de personalidade causam conflitos, sofrimento, afastamentos ou prejuízos reais?",
+    options:YNP,
+    scale:"YNP",
+    required:true
+  },
+
+  {
+    name:"98",
+    section:"Descrição Clínica",
+    type:"textarea",
+    text:"Descreva quais padrões de personalidade mais prejudicam sua vida atualmente: desconfiança, isolamento, comportamento excêntrico, impulsividade, medo de abandono, busca de atenção, necessidade de admiração, evitação social, dependência ou rigidez/perfeccionismo.",
+    required:false
+  },
+  {
+    name:"99",
+    section:"Descrição Clínica",
+    type:"textarea",
+    text:"Descreva uma situação recente em que seu modo de pensar, sentir, reagir ou se relacionar causou conflito, afastamento, prejuízo no trabalho, prejuízo familiar ou sofrimento importante.",
+    required:false
+  },
+  {
+    name:"100",
+    section:"Descrição Clínica",
+    type:"textarea",
+    text:"Informe desde quando esses padrões existem, em quais contextos aparecem e se alguma pessoa próxima confirmaria essas dificuldades.",
+    required:false
+  }
 ];
 
 const INDICATORS_CONFIG = {};
